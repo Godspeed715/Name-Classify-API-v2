@@ -108,10 +108,25 @@ def post_data():
                 'message': 'Error storing profile in database (Internal Server Error)'
             }), 500
         except ValueError as e:
+            data = get_name_data_with_id(conn, response_data.get('id'))
+            # Structure response data from database record
+            response_data = {
+                'id': str(data[0]),
+                'name': data[1],
+                'gender': data[2],
+                'gender_probability': float(data[3]),
+                'sample_size': data[4],
+                'age': data[5],
+                'age_group': data[6],
+                'country_id': data[7],
+                'country_probability': float(data[8]),
+                'created_at': data[9]
+            }
+
             return jsonify({
                 'status': 'success',
                 'message': 'Profile already exists',
-                'data': get_name_data_with_id(conn, response_data.get('id'))
+                'data': response_data
             })
         
         # Return successful response

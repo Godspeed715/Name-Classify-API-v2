@@ -163,20 +163,8 @@ def get_name_data_with_id(conn, id):
             
             cur.execute(get_query, (id,))
             data = cur.fetchone()
-            response_data = {
-            'id': str(data[0]),
-            'name': data[1],
-            'gender': data[2],
-            'gender_probability': float(data[3]),
-            'sample_size': data[4],
-            'age': data[5],
-            'age_group': data[6],
-            'country_id': data[7],
-            'country_probability': float(data[8]),
-            'created_at': data[9]
-        }
             
-        return response_data
+        return data
         
     except PsycopgError as e:
         logger.error(f"Error retrieving profile with ID {id}: {e}")
