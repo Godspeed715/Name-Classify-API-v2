@@ -312,10 +312,7 @@ def delete_profile(id):
         delete_name_data(conn, id)
         
         # Return successful deletion response
-        return jsonify({
-            'status': 'success',
-            'message': f'Profile with ID {id} has been deleted'
-        }), 200
+        return '', 204
         
     except psycopg.Error as db_error:
         logger.error(f"Database error in delete_profile: {db_error}")
