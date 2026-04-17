@@ -13,8 +13,11 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Database connection URI
+DB_URI = os.environ.get('DB_URI')
+
 # Database connection
-conn = psycopg.connect('postgresql://postgres:1234@localhost:5432/postgres')
+conn = psycopg.connect(DB_URI)
 
 # Creates the Flask app
 app = Flask(__name__)
@@ -108,7 +111,7 @@ def post_data():
             return jsonify({
                 'status': 'success',
                 'message': 'Profile already exists',
-                'data': get_name_data_with_id(conn, response_data.get('id'))
+                'data': get_name_data_with_id(response_data.get('id'))
             })
         
         # Return successful response
