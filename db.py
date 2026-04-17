@@ -81,11 +81,7 @@ def insert_name_data(conn, data: dict):
         # Check if profile already exists to prevent duplicates
         if already_added(conn, data.get('name')):
             print('already there')
-            logger.warning(f"Profile with Name: {data.get('name')} already exists in database")
-            raise ValueError({
-                'message': 'Profile already exists',
-                'data': get_name_data_with_id(data.get('id'))
-            })
+            raise ValueError('Name already stored')
         
         # Insert profile data into database
         with conn.cursor() as cur:

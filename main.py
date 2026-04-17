@@ -108,7 +108,7 @@ def post_data():
             return jsonify({
                 'status': 'success',
                 'message': 'Profile already exists',
-                'data': str(e)
+                'data': get_name_data_with_id(conn, response_data.get('id'))
             })
         
         # Return successful response
