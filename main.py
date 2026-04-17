@@ -107,8 +107,8 @@ def post_data():
         except ValueError as e:
             return jsonify({
                 'status': 'success',
-                'message': dict(e)['message'],
-                'data': dict(e)['data']
+                'message': 'Profile already exists',
+                'data': str(e)
             })
         
         # Return successful response
