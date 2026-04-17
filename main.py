@@ -275,6 +275,62 @@ def get_with_optional():
         }), 500
 
 
+@app.route('/api/profiles/<string:id>', methods=['DELETE'])
+def delete_profile(id):
+    """
+    Delete a profile by ID.
+    
+    Removes a profile record from the database using its UUID.
+    Returns a success message if the profile was deleted, or a success message
+    indicating no record was found if the ID doesn't exist.
+    
+    Args:
+        id (str): The UUID of the profile to delete
+    
+    Returns:
+        JSON response with status and message
+    """
+    try:
+        # Validate ID format is not empty
+        if not id or len(id.strip()) == 0:
+            return jsonify({
+                'status': 'error',
+                'message': 'Profile ID is required (Bad Request)'
+            }), 400
+        
+        # Check if profile exists before attempting to delete
+        data = get_name_data_with_id(conn, id)
+        
+        # If profile doesn't exist, return success message as specified
+        if data is None:
+            return jsonify({
+                'status': 'success',
+                'message': 'No record with the Id was found'
+            }), 200
+        
+        # Delete the profile from database
+        delete_name_data(conn, id)
+        
+        # Return successful deletion response
+        return jsonify({
+            'status': 'success',
+            'message': f'Profile with ID {id} has been deleted'
+        }), 200
+        
+    except psycopg.Error as db_error:
+        logger.error(f"Database error in delete_profile: {db_error}")
+        return jsonify({
+            'status': 'error',
+            'message': 'Error deleting profile from database (Internal Server Error)'
+        }), 500
+    except Exception as e:
+        logger.error(f"Unexpected error in delete_profile: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': 'An unexpected error occurred (Internal Server Error)'
+        }), 500
+
+
 # Error Handling in Routes
 @app.errorhandler(400)
 def bad_request(e):
