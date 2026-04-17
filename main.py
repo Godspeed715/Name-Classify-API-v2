@@ -108,7 +108,7 @@ def post_data():
                 'message': 'Error storing profile in database (Internal Server Error)'
             }), 500
         except ValueError as e:
-            data = get_name_data_with_id(conn, response_data.get('id'))
+            data = get_name_with_optional(conn, {'name': name})
             # Structure response data from database record
             response_data = {
                 'id': str(data[0]),
@@ -127,8 +127,14 @@ def post_data():
                 'status': 'success',
                 'message': 'Profile already exists',
                 'data': response_data
-            })
-        
+            }), 200
+        else:
+            # Shouldn't reach here, but handle it gracefully
+            return jsonify({
+                'status': 'error',
+                'message': 'Unable to process duplicate profile'
+            }), 500
+
         # Return successful response
         return jsonify({
             'status': 'success',
