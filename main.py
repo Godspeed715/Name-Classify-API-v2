@@ -111,16 +111,16 @@ def post_data():
             data = get_name_with_optional(conn, {'name': name})
             # Structure response data from database record
             response_data = {
-                'id': str(data[0]),
-                'name': data[1],
-                'gender': data[2],
-                'gender_probability': float(data[3]),
-                'sample_size': data[4],
-                'age': data[5],
-                'age_group': data[6],
-                'country_id': data[7],
-                'country_probability': float(data[8]),
-                'created_at': data[9]
+                'id': str(data[0][0]),
+                'name': data[0][1],
+                'gender': data[0][2],
+                'gender_probability': float(data[0][3]),
+                'sample_size': data[0][4],
+                'age': data[0][5],
+                'age_group': data[0][6],
+                'country_id': data[0][7],
+                'country_probability': float(data[0][8]),
+                'created_at': data[0][9]
             }
 
             return jsonify({
