@@ -1,7 +1,7 @@
 # Imported libraries
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import uuid6
+import uuid_utils
 from db import *
 from datetime import datetime, timezone
 from my_functions import *
@@ -85,7 +85,7 @@ def post_data():
         
         # Build response data object
         response_data = {
-            'id': str(uuid6.uuid7()),
+            'id': str(uuid_utils.uuid7()),
             'name': name.strip(),
             'gender': api_data.get('genderize').get('gender'),
             'gender_probability': api_data.get('genderize').get('probability'),
