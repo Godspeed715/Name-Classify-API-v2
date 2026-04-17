@@ -128,12 +128,6 @@ def post_data():
                 'message': 'Profile already exists',
                 'data': response_data
             }), 200
-        else:
-            # Shouldn't reach here, but handle it gracefully
-            return jsonify({
-                'status': 'error',
-                'message': 'Unable to process duplicate profile'
-            }), 500
 
         # Return successful response
         return jsonify({
